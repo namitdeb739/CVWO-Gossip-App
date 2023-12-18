@@ -33,14 +33,11 @@ func ensureTableExists() {
 }
 
 func clearTable() {
-    a.DB.Exec("DELETE FROM products")
-    a.DB.Exec("ALTER SEQUENCE products_id_seq RESTART WITH 1")
+    a.DB.Exec("DELETE FROM Users")
 }
 
-const tableCreationQuery = `CREATE TABLE IF NOT EXISTS products
+const tableCreationQuery = `CREATE TABLE IF NOT EXISTS gossip."Users"
 (
-    id SERIAL,
-    name TEXT NOT NULL,
-    price NUMERIC(10,2) NOT NULL DEFAULT 0.00,
-    CONSTRAINT products_pkey PRIMARY KEY (id)
-)`
+    "User_ID" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT PK_Users PRIMARY KEY ("User_ID")
+);`
