@@ -157,3 +157,20 @@
 2023-12-18 15:52:00.118 +08 [91406] STATEMENT:  select * from gossip.Users
 	
 	
+2023-12-18 16:25:04.522 +08 [80520] LOG:  received fast shutdown request
+2023-12-18 16:25:04.523 +08 [80520] LOG:  aborting any active transactions
+2023-12-18 16:25:04.525 +08 [80520] LOG:  background worker "logical replication launcher" (PID 80526) exited with exit code 1
+2023-12-18 16:25:04.526 +08 [80521] LOG:  shutting down
+2023-12-18 16:25:04.527 +08 [80521] LOG:  checkpoint starting: shutdown immediate
+2023-12-18 16:25:04.532 +08 [80521] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.006 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=161 kB; lsn=0/2148FE8, redo lsn=0/2148FE8
+2023-12-18 16:25:04.536 +08 [80520] LOG:  database system is shut down
+2023-12-18 23:39:06.318 +08 [7843] LOG:  starting PostgreSQL 16.1 on aarch64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.102), 64-bit
+2023-12-18 23:39:06.320 +08 [7843] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-12-18 23:39:06.320 +08 [7843] LOG:  listening on IPv6 address "::1", port 5432
+2023-12-18 23:39:06.320 +08 [7843] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-12-18 23:39:06.331 +08 [7846] LOG:  database system was shut down at 2023-12-18 16:25:04 +08
+2023-12-18 23:39:06.338 +08 [7843] LOG:  database system is ready to accept connections
+2023-12-18 23:44:06.322 +08 [7844] LOG:  checkpoint starting: time
+2023-12-18 23:44:06.333 +08 [7844] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.013 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/21490D0, redo lsn=0/2149098
+2023-12-19 00:00:13.692 +08 [16455] ERROR:  relation "users" does not exist at character 15
+2023-12-19 00:00:13.692 +08 [16455] STATEMENT:  SELECT * FROM Users
