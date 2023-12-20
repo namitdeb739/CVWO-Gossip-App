@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/namitdeb739/CVWO-Gossip-App/server/handler"
 	"github.com/gofiber/fiber/v2"
+	"github.com/namitdeb739/cvwo-gossip-app/handler"
 )
 
 func SetupRoutes(app *fiber.App) {
@@ -10,8 +10,8 @@ func SetupRoutes(app *fiber.App) {
 	v1 := api.Group("/user")
 
 	v1.Get("/", handler.GetAllUsers)
-	v1.Get("/:id", handler.GetSingleUser)
+	v1.Get("/:user_id", handler.GetSingleUser)
 	v1.Post("/", handler.CreateUser)
-	v1.Put("/:id", handler.UpdateUser)
-	v1.Delete("/:id", handler.DeleteUserByID)
+	// v1.Put("/:user_id", handler.UpdateUser)
+	v1.Delete("/:user_id", handler.DeleteUserByUserID)
 }

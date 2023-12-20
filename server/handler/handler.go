@@ -42,7 +42,7 @@ func GetAllUsers(c* fiber.Ctx) error {
 	}
 
 	return c.Status(200).JSON(fiber.Map{"status": "success",
-										"message": "Users created",
+										"message": "Users found",
 										"data": users})
 }
 
@@ -52,20 +52,20 @@ func GetSingleUser(c *fiber.Ctx) error {
 	user_id := c.Params("User_ID")
 	var user model.User
 
-	db.Find(&user, "User_ID = ?", user_id)
-
-	if user.User_ID == "" {
+	search := db.Where("User_ID = ?", user_id).First(&user)
+	if search.Error != nil {
 		return c.Status(404).JSON(fiber.Map{"status": "error",
-											"message": "User not found",
+											"message": "User " + user_id +  " not found",
 											"data": nil})
 	}
+	
 
 	return c.Status(200).JSON(fiber.Map{"status": "success",
 										"message": "User found",
-										"data": user})
+										"data": user_id})
 }
 
-func UpdateUser(c *fiber.Ctx) error {
+/* func UpdateUser(c *fiber.Ctx) error {
 	type updateUser struct {
 		User_ID string `JSON:"User_ID"`
 	}
@@ -76,11 +76,11 @@ func UpdateUser(c *fiber.Ctx) error {
 
 	user_id := c.Params("User_ID")
 
-	db.Find(&user, "User_ID = ?", user_id)
+	search := db.Where("User_ID = ?", user_id).First(&user)
 
-	if user.User_ID == "" {
+	if search.Error != nil {
 		return c.Status(404).JSON(fiber.Map{"status": "error",
-											"message": "User not found",
+											"message": "User " + user_id +  " not found",
 											"data": nil})
 	}
 
@@ -99,24 +99,22 @@ func UpdateUser(c *fiber.Ctx) error {
 	return c.Status(200).JSON(fiber.Map{"status": "success",
 										"message": "User found",
 										"data": user})
-}
+} */
 
-func DeleteUserByID(c *fiber.Ctx) error {
+func DeleteUserByUserID(c *fiber.Ctx) error {
 	db := database.DB.Db
 	var user model.User
 
 	user_id := c.Params("User_ID")
 
-	db.Find(&user, "User_ID = ?", user_id)
-
-	if user.User_ID == "" {
+	search := db.Where("User_ID = ?", user_id).First(&user)
+	if search.Error != nil {
 		return c.Status(404).JSON(fiber.Map{"status": "error",
-											"message": "User not found",
+											"message": "User " + user_id +  " not found",
 											"data": nil})
 	}
 
 	err := db.Delete(&user, "User_ID = ?", user_id).Error
-
 	if err != nil {
 		return c.Status(404).JSON(fiber.Map{"status": "error",
 											"message": "Failed to delete user",
@@ -124,5 +122,5 @@ func DeleteUserByID(c *fiber.Ctx) error {
 	}
 
 	return c.Status(200).JSON(fiber.Map{"status": "error",
-										"message": "User deleted"})
+										"message": "User " + user_id +  " deleted"})
 }

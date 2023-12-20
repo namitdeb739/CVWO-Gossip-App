@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	User_ID string `json:"User_ID"`
+	User_ID string `json:"User_ID" gorm:"primaryKey;unique;type:varchar(255)"`
 }
 
 type Users struct {

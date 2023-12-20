@@ -5,9 +5,10 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"gorm.io/driver/postgres"
-	"github.com/namitdeb739/CVWO-Gossip-App/server/config"
+
+	"github.com/namitdeb739/cvwo-gossip-app/config"
 	"github.com/namitdeb739/cvwo-gossip-app/model"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )

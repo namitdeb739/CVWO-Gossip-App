@@ -1,1 +1,0 @@
-/Applications/Postgres.app/Contents/Versions/16/bin/postgres "-D" "/Users/namitdeb/Google Drive/University/BComp (CS)/CVWO/CVWO Gossip App/server/database" "-p" "5432"
