@@ -1,13 +1,16 @@
 package main
 
 import (
-	"database/sql"
+	/* "database/sql"
 	"log"
-	"net/http"
+	"net/http" */
 
-	"github.com/namitdeb739/CVWO-Gossip-App"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+ 	"github.com/gofiber/fiber/v2/middleware/logger"
 	_ "github.com/lib/pq"
+	"github.com/namitdeb739/cvwo-gossip-app/database"
+	"github.com/namitdeb739/cvwo-gossip-app/router"
 )
 
 func main() {

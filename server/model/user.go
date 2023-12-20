@@ -1,8 +1,9 @@
 package model
 
 import (
-	"github.com/google/uuid"
- 	"gorm.io/gorm"
+/* 	"github.com/namitdeb739/cvwo-gossip-app/database"
+	"github.com/namitdeb739/cvwo-gossip-app/model"
+	"gorm.io/gorm" */
 )
 
 type User struct {
@@ -13,7 +14,7 @@ type Users struct {
 	Users []User `json:"Users"`
 }
 
-func (user *User) BeforeCreate(tx *gorm.DB) (err error) {
+/* func (user *User) BeforeCreate(tx *gorm.DB) (err error) {
 	user.User_ID = uuid.New()
 	return
-}
+} */
