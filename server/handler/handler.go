@@ -49,20 +49,20 @@ func GetAllUsers(c* fiber.Ctx) error {
 func GetSingleUser(c *fiber.Ctx) error {
 	db := database.DB.Db
 
-	user_id := c.Params("User_ID")
+	username := c.Params("Username")
 	var user model.User
 
-	search := db.Where("User_ID = ?", user_id).First(&user)
+	search := db.Where("Username = ?", username).First(&user)
 	if search.Error != nil {
 		return c.Status(404).JSON(fiber.Map{"status": "error",
-											"message": "User " + user_id +  " not found",
+											"message": "User " + username +  " not found",
 											"data": nil})
 	}
 	
 
 	return c.Status(200).JSON(fiber.Map{"status": "success",
 										"message": "User found",
-										"data": user_id})
+										"data": username})
 }
 
 /* func UpdateUser(c *fiber.Ctx) error {
@@ -101,20 +101,20 @@ func GetSingleUser(c *fiber.Ctx) error {
 										"data": user})
 } */
 
-func DeleteUserByUserID(c *fiber.Ctx) error {
+func DeleteUserByUsername(c *fiber.Ctx) error {
 	db := database.DB.Db
 	var user model.User
 
-	user_id := c.Params("User_ID")
+	username := c.Params("Username")
 
-	search := db.Where("User_ID = ?", user_id).First(&user)
+	search := db.Where("Username = ?", username).First(&user)
 	if search.Error != nil {
 		return c.Status(404).JSON(fiber.Map{"status": "error",
-											"message": "User " + user_id +  " not found",
+											"message": "User " + username +  " not found",
 											"data": nil})
 	}
 
-	err := db.Delete(&user, "User_ID = ?", user_id).Error
+	err := db.Delete(&user, "Username = ?", username).Error
 	if err != nil {
 		return c.Status(404).JSON(fiber.Map{"status": "error",
 											"message": "Failed to delete user",
@@ -122,5 +122,5 @@ func DeleteUserByUserID(c *fiber.Ctx) error {
 	}
 
 	return c.Status(200).JSON(fiber.Map{"status": "error",
-										"message": "User " + user_id +  " deleted"})
+										"message": "User " + username +  " deleted"})
 }
