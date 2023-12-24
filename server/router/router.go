@@ -5,7 +5,9 @@ import (
 	"github.com/namitdeb739/cvwo-gossip-app/handler"
 )
 
+// Defines routes for the webapp
 func SetupRoutes(app *fiber.App) {
+	// Healthcheck for testing purposes
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
 		return c.SendString("OK")
 	})
@@ -14,10 +16,10 @@ func SetupRoutes(app *fiber.App) {
 
 	user := api.Group("/user")
 	user.Get("/", handler.GetAllUsers)
-	user.Get("/:username", handler.GetSingleUser)
+	user.Get("/:id", handler.GetSingleUser)
 	user.Post("/", handler.CreateUser)
-	user.Put("/:username", handler.UpdateUser)
-	user.Delete("/:username", handler.DeleteUser)
+	user.Put("/:id", handler.UpdateUser)
+	user.Delete("/:id", handler.DeleteUser)
 
 	subforum := api.Group("/subforum")
 	subforum.Get("/", handler.GetAllSubforums)

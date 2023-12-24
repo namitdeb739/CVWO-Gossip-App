@@ -43,6 +43,7 @@ func Connect() {
 		os.Exit(2)
 	}
 
+	// Migrate database models
 	log.Println("Connected")
 	db.Logger = logger.Default.LogMode(logger.Info)
 	log.Println("running migrations")

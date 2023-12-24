@@ -11,10 +11,10 @@ type User struct {
 	Password string `json:"password" gorm:"not null;type:varchar(100);check:length(password)>=8"`
 
 	// Relations
-	ModeratedSubforums []Subforum `json:"Moderated_Subforums" gorm:"many2many:moderators_subforums"`
-	Posts []Post `json:"Posts" gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-	Comments []Comment `json:"Comments" gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-	Votes []Vote `json:"Votes" gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+	ModeratedSubforums []Subforum `json:"Moderated_Subforums" gorm:"many2many:moderators_subforums"` // Many Users moderate many Subforums
+	Posts []Post `json:"Posts" gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"` // User makes many Posts
+	Comments []Comment `json:"Comments" gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"` // User makes many comments
+	Votes []Vote `json:"Votes" gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"` // Users make many votes
 }
 
 type Users struct {
@@ -28,8 +28,8 @@ type Subforum struct {
 	Description string `json:"Description" gorm:"type:text"`
 
 	// Relations
-	Moderators []User `json:"Moderators" gorm:"many2many:moderators_subforums"`
-	Posts []Post `json:"Posts" gorm:"foreignKey:SubforumID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+	Moderators []User `json:"Moderators" gorm:"many2many:moderators_subforums"` // Many Subforums are moderated by many Users
+	Posts []Post `json:"Posts" gorm:"foreignKey:SubforumID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"` // Subforum has many Posts
 }
 
 type Subforums struct {
@@ -45,9 +45,9 @@ type Post struct {
 	Body string `json:"Body" gorm:"type:text"`
 
 	// Relations
-	Comments []Comment `json:"Comments" gorm:"foreignKey:PostID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-	Votes []Vote `json:"Votes" gorm:"foreignKey:PostID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-	Tags []Tag `json:"Tags" gorm:"many2many:posts_tags"`
+	Comments []Comment `json:"Comments" gorm:"foreignKey:PostID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"` // Posts have many Comments
+	Votes []Vote `json:"Votes" gorm:"foreignKey:PostID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"` // Posts have many Votes
+	Tags []Tag `json:"Tags" gorm:"many2many:posts_tags"` // Many Posts have many Tags
 }
 
 type Posts struct {
@@ -62,7 +62,7 @@ type Comment struct {
 	ParentCommentID *uint `json:"ParentCommentID"`
 
 	// Relations
-	ChildrenComments []Comment `json:"ChildrenComments" gorm:"foreignKey:ParentCommentID"`
+	ChildrenComments []Comment `json:"ChildrenComments" gorm:"foreignKey:ParentCommentID"` // Comments have many children Comments
 }
 
 type Comments struct {
@@ -85,7 +85,9 @@ type Votes struct {
 type Tag struct {
 	gorm.Model
 	Name string `json:"Name" gorm:"unique;not null;type:varchar(20)"`
-	Posts []Post `json:"Posts" gorm:"many2many:posts_tags"`
+
+	// Relations
+	Posts []Post `json:"Posts" gorm:"many2many:posts_tags"` // Many Tags have many Posts
 }
 
 type Tags struct {

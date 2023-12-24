@@ -1,8 +1,16 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+} */
+
+:root {
+  --nusblue: #003d7c;
+  --nusorange: #ef7c00;
+  --lavblush: #fcf7f8;
+  --linkwater: #ced3dc;
+  --taupegrey: #897c80
 }
 
 .logo {

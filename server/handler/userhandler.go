@@ -15,13 +15,13 @@ func GetAllUsers(c* fiber.Ctx) error {
 }
 
 func GetSingleUser(c* fiber.Ctx) error {
-	return GetSingleEntry(c, model.User{}, "Username")
+	return GetSingleEntry(c, model.User{}, "ID")
 }
 
 func UpdateUser(c *fiber.Ctx) error {
-	return UpdateEntry(c, model.User{}, "Username")
+	return UpdateEntry(c, model.User{}, "ID")
 }
 
 func DeleteUser(c* fiber.Ctx) error {
-	return DeleteEntry(c, model.User{}, "Username")
+	return DeleteEntry(c, model.User{}, "ID")
 }
