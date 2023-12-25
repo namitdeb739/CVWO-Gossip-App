@@ -1,19 +1,32 @@
-import { Box } from '@mantine/core';
-import useSWR from "swr";
-import './App.css'
-import Home from './Pages/Home';
+import './App.css';
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Nav from "./components/Nav";
+import theme from './Theme';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "@emotion/react";
 
 export const ENDPOINT = 'http://localhost:8080'
 
-const fetcher = (url: string) =>
-  fetch(`${ENDPOINT}/${url}`).then((r) => r.json());
-
 function App() {
-  // const {data, mutate} = useSWR(`api/user`, fetcher) 
-
   return (
-    <Home></Home>
-  )
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Nav />
+
+        <main>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </BrowserRouter>
+        </main>
+      </div>
+    </ThemeProvider>
+  );
 }
 
 export default App;

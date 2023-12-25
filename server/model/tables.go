@@ -8,7 +8,7 @@ import (
 type User struct {
 	gorm.Model
 	Username string `json:"Username" gorm:"unique;not null;type:varchar(20)"`
-	Password string `json:"password" gorm:"not null;type:varchar(100);check:length(password)>=8"`
+	Password string `json:"-" gorm:"not null;type:varchar(100);check:length(password)>=8"`
 
 	// Relations
 	ModeratedSubforums []Subforum `json:"Moderated_Subforums" gorm:"many2many:moderators_subforums"` // Many Users moderate many Subforums

@@ -1,4 +1,4 @@
-package handler
+package crud
 
 import (
 	"github.com/gofiber/fiber/v2"
@@ -15,7 +15,7 @@ func GetAllUsers(c* fiber.Ctx) error {
 }
 
 func GetSingleUser(c* fiber.Ctx) error {
-	return GetSingleEntry(c, model.User{}, "ID")
+	return GetSingleEntry(c, model.User{}, "Username")
 }
 
 func UpdateUser(c *fiber.Ctx) error {

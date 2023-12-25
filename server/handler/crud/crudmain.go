@@ -1,4 +1,4 @@
-package handler
+package crud
 
 import (
 	"reflect"
@@ -23,7 +23,7 @@ func CreateEntry(c *fiber.Ctx, tableType interface{}) error {
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{"status": "error",
 											"message": "Invalid input: " + err.Error(),
-											"data": entryType})
+											"data": entry})
 	}
 
 	err = db.Create(entry).Error

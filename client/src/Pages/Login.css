@@ -13,7 +13,7 @@
     padding-bottom: 30px;
 }
 
-.header{
+.header {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,13 +22,13 @@
     margin-top: 30px;
 }
 
-.text{
+.text {
     color: var(--nusblue);
     font-size: 36px;
     font-weight: 700;
 }
 
-.underline{
+.underline {
     width: 35%;
     height: 6px;
     background-color: var(--nusblue);
