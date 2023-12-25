@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/namitdeb739/cvwo-gossip-app/handler"
+	"github.com/namitdeb739/cvwo-gossip-app/handler/crud"
 )
 
 // Defines routes for the webapp
