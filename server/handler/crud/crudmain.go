@@ -30,7 +30,7 @@ func CreateEntry(c *fiber.Ctx, tableType interface{}) error {
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{"status": "error",
 											"message": "Could not create " + entryTypeName + ": " + err.Error(),
-											"data": "err"})
+											"data": entry})
 	}
 
 	return c.Status(201).JSON(fiber.Map{"status": "success",

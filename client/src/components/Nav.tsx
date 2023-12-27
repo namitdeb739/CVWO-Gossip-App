@@ -75,7 +75,7 @@ function ResponsiveAppBar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -101,7 +101,43 @@ function ResponsiveAppBar() {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="a"
+                            href="/login"
+                            sx={{
+                                mr: 2,
+                                flexGrow: 1,
+                                fontSize: 14,
+                                fontWeight: 700,
+                                letterSpacing: '.1rem',
+                                color: '#fff',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            Log In
+                        </Typography>
+                    </Box>
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="a"
+                            href="/register"
+                            sx={{
+                                mr: 2,
+                                flexGrow: 1,
+                                fontSize: 14,
+                                fontWeight: 700,
+                                letterSpacing: '.1rem',
+                                color: '#fff',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            Register
+                        </Typography>
+                        {/* <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Typography
                                     variant="h5"
@@ -141,7 +177,7 @@ function ResponsiveAppBar() {
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
-                        </Menu>
+                        </Menu> */}
                     </Box>
                 </Toolbar>
             </Container>

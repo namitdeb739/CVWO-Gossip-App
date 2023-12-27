@@ -94,8 +94,24 @@
     cursor: pointer;
 }
 
+.disabled {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: var(--lavblush);
+    background-color: var(--nusblue);
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    opacity: 0.5;
+} 
+
 .errorMessage {
     margin-top: 10px;
     color: darkred;
     font-size: 14px;
+    text-align: center;
+    width: 50ch;
 }

@@ -1,12 +1,10 @@
 import './App.css';
-import Login from "./pages/Login";
 import Home from "./pages/Home";
-import Register from "./pages/Register";
+import LoginRegister from "./pages/LoginRegister";
 import Nav from "./components/Nav";
 import theme from './Theme';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
-
 export const ENDPOINT = 'http://localhost:8080'
 
 function App() {
@@ -18,9 +16,9 @@ function App() {
         <main>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/"   element={<Home />} />
+              <Route path="/login" element={<LoginRegister type="Login" />} />
+              <Route path="/register" element={<LoginRegister type="Register" />} />
             </Routes>
           </BrowserRouter>
         </main>
