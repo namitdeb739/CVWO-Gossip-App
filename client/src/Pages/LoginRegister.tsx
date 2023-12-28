@@ -3,11 +3,15 @@ import user_icon from "./../Assets/Images/User.png";
 import key_icon from "./../Assets/Images/Key.png";
 import eye_icon from "./../Assets/Images/Eye.png";
 import { SyntheticEvent, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function LoginRegister({ type }: { type: string }) {
+function LoginRegister(props: {
+  setUsername?: (name: string) => void;
+  type: string;
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [attemptErrorMessage, setAttemptErrorMessage] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
   const [registerRedirect, setRegisterRedirect] = useState(false);
   const [loginRedirect, setLoginRedirect] = useState(false);
@@ -19,9 +23,9 @@ function LoginRegister({ type }: { type: string }) {
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    await fetch(
-      "http://localhost:8080/api/" + type,
-      type === "Register"
+    const response = await fetch(
+      "http://localhost:8080/api/" + props.type,
+      props.type === "Register"
         ? {
             method: "POST",
             headers: {
@@ -36,7 +40,6 @@ function LoginRegister({ type }: { type: string }) {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "http:localhost:8080/api/login",
             },
             credentials: "include",
             body: JSON.stringify({
@@ -46,20 +49,34 @@ function LoginRegister({ type }: { type: string }) {
           }
     );
 
-    type === "Register" ? setRegisterRedirect(true) : setLoginRedirect(true);
+    const content = await response.json();
+
+    if (content.status !== "success") {
+      setAttemptErrorMessage(content.message)
+    } else {
+      setAttemptErrorMessage("");
+      if (props.setUsername != undefined) {
+        props.setUsername(content.data.Username);
+      }
+
+      props.type === "Register"
+        ? setRegisterRedirect(true)
+        : setLoginRedirect(true);
+    }
   };
 
+  const navigate = useNavigate();
   if (registerRedirect) {
-    return <Navigate to={"/login"} replace={true} />;
+    navigate("/login");
   }
   if (loginRedirect) {
-    return <Navigate to={"/"} replace={true} />;
+    navigate("/");
   }
 
   return (
     <div className="container">
       <div className="header">
-        <div className="text">{type}</div>
+        <div className="text">{props.type}</div>
         <div className="underline"></div>
       </div>
       <div className="inputs">
@@ -107,6 +124,7 @@ function LoginRegister({ type }: { type: string }) {
             upper and lower case letters, cannot contain spaces
           </p>
         )}
+        {attemptErrorMessage===""?<p></p>:<p>{attemptErrorMessage}; try again</p>}
       </div>
       <div className="submit-container">
         <button
@@ -116,11 +134,11 @@ function LoginRegister({ type }: { type: string }) {
           onClick={submit}
           disabled={!isUsernameValid || !isPasswordValid}
         >
-          {type}
+          {props.type}
         </button>
       </div>
       <div>
-        {type === "Login" ? (
+        {props.type === "Login" ? (
           <p>
             No account?{" "}
             <a href="/register">

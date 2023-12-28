@@ -9,11 +9,15 @@ func CreateTag(c *fiber.Ctx) error {
 	return CreateEntry(c, model.Tag{})
 }
 
-func GetAllTags(c* fiber.Ctx) error {
+func GetAllTags(c *fiber.Ctx) error {
 	return GetAllEntries(c, model.Tag{})
 }
 
-func GetSingleTag(c* fiber.Ctx) error {
+func getSomeTags(c *fiber.Ctx, searchKeys map[string]string) error {
+	return GetSomeEntries(c, model.Tag{}, searchKeys)
+}
+
+func GetSingleTag(c *fiber.Ctx) error {
 	return GetSingleEntry(c, model.Tag{}, "ID")
 }
 
@@ -21,6 +25,6 @@ func UpdateTag(c *fiber.Ctx) error {
 	return UpdateEntry(c, model.Tag{}, "ID")
 }
 
-func DeleteTag(c* fiber.Ctx) error {
+func DeleteTag(c *fiber.Ctx) error {
 	return DeleteEntry(c, model.Tag{}, "ID")
 }

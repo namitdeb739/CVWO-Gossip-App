@@ -1,10 +1,11 @@
-import './Home.css'
-import React from 'react'
+import "./Home.css";
 
-function Home() {
+function Home(props: { username: string }) {
   return (
-    <div>Home</div>
-  )
+    <div>
+      {props.username ? "Hi " + props.username : "You are not logged in"}
+    </div>
+  );
 }
 
-export default Home
+export default Home;

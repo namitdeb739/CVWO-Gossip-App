@@ -6,16 +6,19 @@ import (
 )
 
 
-
 func CreateSubforum(c *fiber.Ctx) error {
 	return CreateEntry(c, model.Subforum{})
 }
 
-func GetAllSubforums(c* fiber.Ctx) error {
+func GetAllSubforums(c *fiber.Ctx) error {
 	return GetAllEntries(c, model.Subforum{})
 }
 
-func GetSingleSubforum(c* fiber.Ctx) error {
+func getSomeSubforums(c *fiber.Ctx, searchKeys map[string]string) error {
+	return GetSomeEntries(c, model.Subforum{}, searchKeys)
+}
+
+func GetSingleSubforum(c *fiber.Ctx) error {
 	return GetSingleEntry(c, model.Subforum{}, "ID")
 }
 
@@ -23,6 +26,6 @@ func UpdateSubforum(c *fiber.Ctx) error {
 	return UpdateEntry(c, model.Subforum{}, "ID")
 }
 
-func DeleteSubforum(c* fiber.Ctx) error {
+func DeleteSubforum(c *fiber.Ctx) error {
 	return DeleteEntry(c, model.Subforum{}, "ID")
 }

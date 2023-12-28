@@ -25,7 +25,7 @@ type Users struct {
 	Users []User `json:"Users"`
 }
 
-func (u *User) isValidUser() error {
+func IsValidUser(u *User) error {
 	containsSpace := func(s string) bool {
 		for _, char := range s {
 			if unicode.IsSpace(char) {

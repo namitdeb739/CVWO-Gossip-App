@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 20px;
+  background: var(--lavblush);
+  padding-bottom: 30px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.text {
+  color: var(--nusblue);
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.eyeIcon {
+  display: flex;
+  height: 100%;
+  width: 25px;
+  margin: 0% 30px;
+}
+
+.passwordContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.passwordContainer img {
+  margin-left: auto;
+}

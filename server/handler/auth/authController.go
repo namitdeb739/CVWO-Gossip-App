@@ -15,18 +15,6 @@ import (
 const Secretkey = "secret"
 
 func Register(c *fiber.Ctx) error {
-	var entry map[string]string
-
-	if err := c.BodyParser(&entry); err != nil {
-		return err
-	}
-
-	if len(entry["password"]) < 8 {
-		return c.Status(422).JSON(fiber.Map{"status": "error",
-											"message": "Invalid Password: Length must be at least 8 characters",
-											"data": nil})
-	}
-	
 	return crud.CreateUser(c)
 }
 

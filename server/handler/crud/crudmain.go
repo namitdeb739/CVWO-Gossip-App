@@ -59,6 +59,31 @@ func GetAllEntries(c* fiber.Ctx, tableType interface{}) error {
 										"data": entries})
 }
 
+func GetSomeEntries(c *fiber.Ctx, tableType interface{}, searchKeys map[string]string) error {
+	db := database.DB.Db
+
+	entrySliceType := reflect.SliceOf(reflect.TypeOf(tableType))
+	entryTypeName := reflect.TypeOf(tableType).Name() + "s"
+	entries := reflect.New(entrySliceType).Interface()
+
+	search := db
+	for searchKey := range searchKeys {
+		searchKeys[searchKey] = c.Params(searchKey)
+		search = search.Where(searchKey + " = ?", searchKeys[searchKey])
+	}
+	search = search.Find(entries)
+
+	if search.Error != nil {
+		return c.Status(404).JSON(fiber.Map{"status": "error",
+											"message": entryTypeName + "s "  +  " not found",
+											"data": nil})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"status": "success",
+										"message": entryTypeName + " found",
+										"data": entries})
+}
+
 func GetSingleEntry(c *fiber.Ctx, tableType interface{}, primaryKeyFieldName string) error {
 	db := database.DB.Db
 
@@ -88,6 +113,7 @@ func GetSingleEntry(c *fiber.Ctx, tableType interface{}, primaryKeyFieldName str
 										"message": entryTypeName + " found",
 										"data": entry})
 }
+
 
 func UpdateEntry(c *fiber.Ctx, tableType interface{}, primaryKeyFieldName string) error {
 	db := database.DB.Db

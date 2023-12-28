@@ -9,11 +9,15 @@ func CreatePost(c *fiber.Ctx) error {
 	return CreateEntry(c, model.Post{})
 }
 
-func GetAllPosts(c* fiber.Ctx) error {
+func GetAllPosts(c *fiber.Ctx) error {
 	return GetAllEntries(c, model.Post{})
 }
 
-func GetSinglePost(c* fiber.Ctx) error {
+func getSomePosts(c *fiber.Ctx, searchKeys map[string]string) error {
+	return GetSomeEntries(c, model.Post{}, searchKeys)
+}
+
+func GetSinglePost(c *fiber.Ctx) error {
 	return GetSingleEntry(c, model.Post{}, "ID")
 }
 
@@ -21,6 +25,6 @@ func UpdatePost(c *fiber.Ctx) error {
 	return UpdateEntry(c, model.Post{}, "ID")
 }
 
-func DeletePost(c* fiber.Ctx) error {
+func DeletePost(c *fiber.Ctx) error {
 	return DeleteEntry(c, model.Post{}, "ID")
 }
