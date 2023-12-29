@@ -12,10 +12,10 @@ export const ENDPOINT = "http://localhost:8080";
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [moderatedSubforums, setModeratedSubforums] = useState("");
-  const [posts, setPosts] = useState("[]");
-  const [comments, setComments] = useState("[]");
-  const [votes, setVotes] = useState("[]");
+  const [moderatedSubforums, setModeratedSubforums] = useState([""]);
+  const [posts, setPosts] = useState([""]);
+  const [comments, setComments] = useState([""]);
+  const [votes, setVotes] = useState([""]);
   const [createdAt, setCreatedAt] = useState(Date.now);
 
   const user: User = {

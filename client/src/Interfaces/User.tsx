@@ -8,23 +8,23 @@ interface User {
     setter: React.Dispatch<React.SetStateAction<string>>;
   };
   moderatedSubforums: {
-    value: string;
-    setter: React.Dispatch<React.SetStateAction<string>>;
+    value: any[];
+    setter: React.Dispatch<React.SetStateAction<any[]>>;
   };
   posts: {
-    value: string;
-    setter: React.Dispatch<React.SetStateAction<string>>;
+    value: any[];
+    setter: React.Dispatch<React.SetStateAction<any[]>>;
   };
   comments: {
-    value: string;
-    setter: React.Dispatch<React.SetStateAction<string>>;
+    value: any[];
+    setter: React.Dispatch<React.SetStateAction<any[]>>;
   };
   votes: {
-    value: string;
-    setter: React.Dispatch<React.SetStateAction<string>>;
+    value: any[];
+    setter: React.Dispatch<React.SetStateAction<any[]>>;
   };
   createdAt: {
-    value: string;
-    setter: React.Dispatch<React.SetStateAction<string>>;
+    value: number;
+    setter: React.Dispatch<React.SetStateAction<number>>;
   };
 }

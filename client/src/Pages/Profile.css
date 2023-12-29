@@ -23,19 +23,24 @@
   font-weight: 700;
 }
 
-.eyeIcon {
-  display: flex;
-  height: 100%;
-  width: 25px;
-  margin: 0% 30px;
-}
-
-.passwordContainer {
+.dataContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.passwordContainer img {
-  margin-left: auto;
+.label {
+  font-weight: bold;
+}
+
+.eyeIcon {
+  height: 100%;
+  width: 25px;
+  margin-left: 10px;
+}
+
+.dataListContainer {
+  align-items: center;
+  justify-content: space-between;
+  
 }
