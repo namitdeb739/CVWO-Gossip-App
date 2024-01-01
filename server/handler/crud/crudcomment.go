@@ -13,9 +13,9 @@ func GetAllComments(c *fiber.Ctx) error {
 	return GetAllEntries(c, model.Comment{})
 }
 
-func getSomeComments(c *fiber.Ctx, searchKeys map[string]string) error {
+/* func getSomeComments(c *fiber.Ctx, searchKeys map[string]string) error {
 	return GetSomeEntries(c, model.Comment{}, searchKeys)
-}
+} */
 
 func GetSingleComment(c *fiber.Ctx) error {
 	return GetSingleEntry(c, model.Comment{}, "ID")

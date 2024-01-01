@@ -1,0 +1,24 @@
+.container {
+  align-items: center;
+  background: var(--lavblush);
+  width: 100%;
+}
+
+.card {
+  background: var(--lavblush);
+  width: 100%;
+  margin: auto;
+  padding: 12px; 
+}
+
+.voteIcon {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+  margin: 10px;
+}

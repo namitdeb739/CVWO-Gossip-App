@@ -13,9 +13,9 @@ func GetAllVotes(c *fiber.Ctx) error {
 	return GetAllEntries(c, model.Vote{})
 }
 
-func getSomeVotes(c *fiber.Ctx, searchKeys map[string]string) error {
+/* func getSomeVotes(c *fiber.Ctx, searchKeys map[string]string) error {
 	return GetSomeEntries(c, model.Vote{}, searchKeys)
-}
+} */
 
 func GetSingleVote(c *fiber.Ctx) error {
 	return GetSingleEntry(c, model.Vote{}, "ID")

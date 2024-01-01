@@ -1,7 +1,7 @@
 import "./LoginRegister.css";
-import user_icon from "./../Assets/Images/User.png";
-import key_icon from "./../Assets/Images/Key.png";
-import eye_icon from "./../Assets/Images/Eye.png";
+import PersonIcon from "@mui/icons-material/Person";
+import KeyIcon from "@mui/icons-material/Key";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -52,7 +52,7 @@ function LoginRegister(props: {
     const content = await response.json();
 
     if (content.status !== "success") {
-      setAttemptErrorMessage(content.message)
+      setAttemptErrorMessage(content.message);
     } else {
       setAttemptErrorMessage("");
       if (props.setUsername != undefined) {
@@ -81,7 +81,7 @@ function LoginRegister(props: {
       </div>
       <div className="inputs">
         <div className={isUsernameValid ? "input" : "input invalid"}>
-          <img src={user_icon} className="inputIcon" />
+          <PersonIcon fontSize="large" className="inputIcon" />
           <input
             type="Username"
             placeholder="Username"
@@ -89,7 +89,9 @@ function LoginRegister(props: {
           />
         </div>
         <div className={isPasswordValid ? "input" : "input invalid"}>
-          <img src={key_icon} className="inputIcon" />
+          <div>
+            <KeyIcon fontSize="large" className="inputIcon" />
+          </div>
           <input
             className={password.length >= 8 ? "" : "invalid"}
             value={password}
@@ -104,7 +106,7 @@ function LoginRegister(props: {
               setHidePassword(!hidePassword);
             }}
           >
-            <img src={eye_icon} className="inputIcon" />
+            <VisibilityIcon fontSize="large" />
           </a>
         </div>
       </div>
@@ -124,7 +126,11 @@ function LoginRegister(props: {
             upper and lower case letters, cannot contain spaces
           </p>
         )}
-        {attemptErrorMessage===""?<p></p>:<p>{attemptErrorMessage}; try again</p>}
+        {attemptErrorMessage === "" ? (
+          <p></p>
+        ) : (
+          <p>{attemptErrorMessage}; try again</p>
+        )}
       </div>
       <div className="submit-container">
         <button

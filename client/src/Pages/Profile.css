@@ -6,6 +6,7 @@
   margin-top: 20px;
   background: var(--lavblush);
   padding-bottom: 30px;
+  border-radius: 6px;
 }
 
 .header {
@@ -23,24 +24,122 @@
   font-weight: 700;
 }
 
+.underline {
+  width: 35%;
+  height: 6px;
+  background-color: var(--nusblue);
+  border-radius: 9px;
+}
+
 .dataContainer {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 15px;
+  background-color: var(--linkwater);
 }
 
 .label {
   font-weight: bold;
+  font-size: 20px;
+}
+
+.data {
+  font-size: 18px;
 }
 
 .eyeIcon {
-  height: 100%;
-  width: 25px;
-  margin-left: 10px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
 }
 
 .dataListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--linkwater);
+  gap: 15px;
+}
+
+.dataListContainer > * {
+  width: 100%;
+  background-color: var(--linkwater);
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.dataListContainer .label {
+  font-weight: bold;
+  font-size: 20px;
+  background-color: var(--linkwater);
+}
+
+.dataListContainer .dataHeader {
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 18px;
+  text-align: left;
+  background-color: var(--linkwater);
+}
+
+.dataListContainer .data {
+  font-size: 18px;
+  text-align: left;
+  background-color: var(--linkwater);
+}
+
+.dataListContainer .dataDate {
+  font-size: 18px;
+  text-align: right;
+  background-color: var(--linkwater);
+}
+
+.dateJoinedBox,
+.passwordBox,
+.voteBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: var(--linkwater);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.dateJoinedBox .dataContainer,
+.passwordBox .dataContainer,
+.voteBox .dataContainer {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  
+  width: 100%;
+}
+
+.dateJoinedBox .label,
+.passwordBox .label,
+.voteBox .label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.dateJoinedBox .data,
+.passwordBox .data,
+.voteBox .data {
+  font-size: 18px;
+}
+
+.dateJoinedBox .icon,
+.passwordBox .icon,
+.voteBox .icon {
+  margin-left: 18px;
+}
+
+.custom-hover-effect:hover {
+  background-color: var(--lavblush);
+}
+
+.custom-hover-effect:hover * {
+  background-color: var(--nusorange);
 }

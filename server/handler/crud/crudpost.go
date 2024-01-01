@@ -13,9 +13,9 @@ func GetAllPosts(c *fiber.Ctx) error {
 	return GetAllEntries(c, model.Post{})
 }
 
-func getSomePosts(c *fiber.Ctx, searchKeys map[string]string) error {
+/* func getSomePosts(c *fiber.Ctx, searchKeys map[string]string) error {
 	return GetSomeEntries(c, model.Post{}, searchKeys)
-}
+} */
 
 func GetSinglePost(c *fiber.Ctx) error {
 	return GetSingleEntry(c, model.Post{}, "ID")

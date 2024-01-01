@@ -1,58 +1,59 @@
 import { useEffect, useState } from "react";
 import "./Profile.css";
-import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import eye_icon from "./../Assets/Images/Eye.png";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
-  padding: theme.spacing(3),
+  padding: theme.spacing(1),
   textAlign: "center",
-  color: theme.palette.text.secondary,
   fontSize: 19,
+  boxShadow: "none",
+  backgroundColor: "var(--linkwater)",
+  transition: "background-color 0.1s",
 }));
 
 function Profile(props: { user: User }) {
-  const userCreatedAt = new Date(props.user.createdAt.value);
+  const [username, setUsername] = useState(props.user.Username);
+  const [password, setPassword] = useState(props.user.Password);
+  const [moderatedSubforums, setModeratedSubforums] = useState(
+    props.user.ModeratedSubforums
+  );
+  const [posts, setPosts] = useState(props.user.Posts);
+  const [votes, setVotes] = useState(props.user.Votes);
+  const [createdAt, setCreatedAt] = useState(props.user.CreatedAt);
+  const [hidePassword, setHidePassword] = useState(true);
+
+  const [recentPosts, setRecentPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      setUsername(props.user.Username);
+      setPassword(props.user.Password);
+      setModeratedSubforums(props.user.ModeratedSubforums);
+      setPosts(props.user.Posts);
+      setVotes(props.user.Votes);
+      setCreatedAt(props.user.CreatedAt);
+
+      const sortedPosts =
+        props.user.Posts && props.user.Posts.length > 0
+          ? props.user.Posts.sort(
+              (a, b) =>
+                new Date(b.CreatedAt.toString()).valueOf() -
+                new Date(a.CreatedAt.toString()).valueOf()
+            )
+          : [];
+
+      setRecentPosts(sortedPosts.slice(0, 10));
+    })();
+  }, [props.user]);
 
   const formatDate = (date: Date) => {
     return date.toISOString().slice(0, 19).replace("T", " ");
   };
-
-  const [username, setUsername] = useState(props.user.username.value);
-  const [password, setPassword] = useState(props.user.password.value);
-  const [moderatedSubforums, setModeratedSubforums] = useState(
-    props.user.moderatedSubforums.value
-  );
-  const [posts, setPosts] = useState(props.user.posts.value);
-  const [comments, setComments] = useState(props.user.comments.value);
-  const [votes, setVotes] = useState(props.user.votes.value);
-  const [createdAt, setCreatedAt] = useState(userCreatedAt);
-  const [hidePassword, setHidePassword] = useState(true);
-
-  const [recentPosts, setRecentPosts] = useState<any[]>([""]);
-
-  useEffect(() => {
-    setUsername(props.user.username.value);
-    setPassword(props.user.password.value);
-    setModeratedSubforums(props.user.moderatedSubforums.value);
-    setPosts(props.user.posts.value);
-    setComments(props.user.comments.value);
-    setVotes(props.user.votes.value);
-    setCreatedAt(new Date(props.user.createdAt.value));
-
-    const sortedPosts =
-      posts === undefined
-        ? []
-        : posts.sort((a, b) => b.CreatedAt - a.CreatedAt);
-
-    // Set the most recent posts
-    setRecentPosts(sortedPosts.slice(0, 3));
-  }, [props.user]);
 
   return (
     <div className="container">
@@ -68,15 +69,15 @@ function Profile(props: { user: User }) {
         marginTop={2}
       >
         <Grid item xs={3.5}>
-          <Item>
+          <div className="dateJoinedBox">
             <div className="dataContainer">
               <div className="label">Date Joined:</div>
               <div className="data">{formatDate(createdAt)}</div>
             </div>
-          </Item>
+          </div>
         </Grid>
         <Grid item xs={3.5}>
-          <Item>
+          <div className="passwordBox">
             <div className="dataContainer">
               <div className="label">Password:</div>
               <div className="data">
@@ -89,88 +90,114 @@ function Profile(props: { user: User }) {
                     setHidePassword(!hidePassword);
                   }}
                 >
-                  <img src={eye_icon} className="eyeIcon" />
+                  <VisibilityIcon />
                 </a>
               </div>
             </div>
-          </Item>
+          </div>
+        </Grid>
+        <Grid item xs={3.5}>
+          <div className="voteBox">
+            <div className="dataContainer">
+              <div className="label">Vote Count:</div>
+              <div className="data">
+                {votes && votes.length > 0 ? (
+                  <div>
+                    {votes.filter((vote) => vote.Type === true).length} Up /{" "}
+                    {votes.filter((vote) => vote.Type === false).length} Down
+                  </div>
+                ) : (
+                  <div>0 Up / 0 Down</div>
+                )}
+              </div>
+            </div>
+          </div>
         </Grid>
         <Grid item xs={12}></Grid>
-        <Grid item xs={4}>
-          {1 > 0 ? <div></div> :
-            <Item>
-              <div className="dataListContainer">
-                <div className="label">Moderated Subforums</div>
-                <Box sx={{
+        <Grid item xs={5}>
+          <Item>
+            <div className="dataListContainer">
+              <div className="label">Moderated Subforums</div>
+              <Box
+                sx={{
                   display: "grid",
-                  gridTemplateRows: "repeat(3, 1fr)"
-                }}>
-                  {moderatedSubforums.map((subforum, index) => (
-                    <Item key={index}>
+                  gridTemplateRows: "repeat(10, 1fr)",
+                }}
+              >
+                {moderatedSubforums && moderatedSubforums.length > 0 ? (
+                  moderatedSubforums.map((subforum, index) => (
+                    <Item key={index} className="custom-hover-effect">
                       <Box
-                        className="dataContainer"
                         sx={{
                           display: "grid",
                           gridTemplateColumns: "repeat(2, 1fr)",
                         }}
+                        className="hoverBox"
                       >
-                        <Item>
-                          <div className="label">{subforum.Name}</div>
+                        <Item className="hoverBox">
+                          <div className="dataHeader">{subforum.Name}</div>
                         </Item>
-                        <Item>
+                        <Item className="hoverBox">
                           <div className="data">
-                            {subforum.Description.length > 15
+                            {subforum.Description === undefined
+                              ? ""
+                              : subforum.Description.length > 15
                               ? subforum.Description.slice(0, 15) + "..."
                               : subforum.Description}
                           </div>
                         </Item>
                       </Box>
                     </Item>
-                  ))}
-                </Box>
-              </div>
-            </Item>}
+                  ))
+                ) : (
+                  <div />
+                )}
+              </Box>
+            </div>
+          </Item>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <Item>
             <div className="dataListContainer">
               <div className="label">Recent Posts</div>
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateRows: "repeat(3, 1fr)",
+                  gridTemplateRows: "repeat(10, 1fr)",
                 }}
               >
-                {recentPosts.length === 0 ? (
-                  <div></div>
-                ) : (
+                {recentPosts && recentPosts.length > 0 ? (
                   recentPosts.map((post, index) => (
-                    <Item key={index}>
+                    <Item key={index} className="custom-hover-effect">
                       <Box
-                        className="dataContainer"
+                        className="hoverBox"
                         sx={{
                           display: "grid",
                           gridTemplateColumns: "repeat(3, 1fr)",
                         }}
                       >
-                        <Item>
-                          <div className="label">{post.Title}</div>
+                        <Item className="hoverBox">
+                          <div className="dataHeader">{post.Title}</div>
                         </Item>
-                        <Item>
+                        <Item className="hoverBox">
                           <div className="data">
-                            {post.Body.length > 15
+                            {post.Body && post.Body.length > 15
                               ? post.Body.slice(0, 15) + "..."
                               : post.Body}
                           </div>
                         </Item>
-                        <Item>
-                          <div className="data">
-                            {post.CreatedAt.split("T")[0]}
+                        <Item className="hoverBox">
+                          <div className="dataDate">
+                            {post.CreatedAt
+                              ? post.CreatedAt.toString().split("T")[0]
+                              : ""}
                           </div>
                         </Item>
                       </Box>
                     </Item>
                   ))
+                ) : (
+                  <div />
                 )}
               </Box>
             </div>

@@ -12,23 +12,20 @@ export const ENDPOINT = "http://localhost:8080";
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [moderatedSubforums, setModeratedSubforums] = useState([""]);
-  const [posts, setPosts] = useState([""]);
-  const [comments, setComments] = useState([""]);
-  const [votes, setVotes] = useState([""]);
-  const [createdAt, setCreatedAt] = useState(Date.now);
+  const [moderatedSubforums, setModeratedSubforums] = useState<Subforum[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [votes, setVotes] = useState<Vote[]>([]);
+  const [createdAt, setCreatedAt] = useState(new Date);
 
   const user: User = {
-    username: { value: username, setter: setUsername },
-    password: { value: password, setter: setPassword },
-    moderatedSubforums: {
-      value: moderatedSubforums,
-      setter: setModeratedSubforums,
-    },
-    posts: { value: posts, setter: setPosts },
-    comments: { value: comments, setter: setComments },
-    votes: { value: votes, setter: setVotes },
-    createdAt: { value: createdAt, setter: setCreatedAt },
+    Username: username,
+    Password: password,
+    ModeratedSubforums: moderatedSubforums,
+    Posts: posts,
+    Comments: comments,
+    Votes: votes,
+    CreatedAt: createdAt,
   };
 
   useEffect(() => {
@@ -40,13 +37,13 @@ function App() {
 
       const content = await response.json();
 
-      user.username.setter(content.data.Username);
-      user.password.setter(content.data.Password);
-      user.moderatedSubforums.setter(content.data.moderatedSubforums);
-      user.posts.setter(content.data.Posts);
-      user.comments.setter(content.data.Comments);
-      user.votes.setter(content.data.Votes);
-      user.votes.setter(content.data.createdAt);
+      setUsername(content.data.Username);
+      setPassword(content.data.Password);
+      setModeratedSubforums(content.data.Moderated_Subforums);
+      setPosts(content.data.Posts);
+      setComments(content.data.Comments);
+      setVotes(content.data.Votes);
+      setCreatedAt(new Date(content.data.CreatedAt));
     })();
   });
 
@@ -54,22 +51,23 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Nav
-          username={user.username.value}
-          setUsername={user.username.setter}
+          username={user.Username}
+          setUsername={setUsername}
         />
         <main>
           <BrowserRouter>
             <Routes>
               <Route
                 path="/"
-                element={<Home username={user.username.value} />}
+                element={<Home />}
               />
+              <Route path="/profile" element={<Profile user={user} />} />
               <Route
                 path="/login"
                 element={
                   <LoginRegister
                     type="Login"
-                    setUsername={user.username.setter}
+                    setUsername={setUsername}
                   />
                 }
                 key="login"
@@ -79,7 +77,6 @@ function App() {
                 element={<LoginRegister type="Register" />}
                 key="register"
               />
-              <Route path="/profile" element={<Profile user={user} />} />
             </Routes>
           </BrowserRouter>
         </main>

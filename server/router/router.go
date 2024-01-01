@@ -33,6 +33,13 @@ func SetupRoutes(app *fiber.App) {
 	subforum.Put("/:id", crud.UpdateSubforum)
 	subforum.Delete("/:id", crud.DeleteSubforum)
 
+	moderatorsSubforums := api.Group("/moderatorssubforums")
+	moderatorsSubforums.Get("/", crud.GetAllModeratorsSubforums)
+	moderatorsSubforums.Get("/search", crud.GetSingleModeratorsSubforums)
+	moderatorsSubforums.Post("/", crud.CreateModeratorsSubforums)
+	moderatorsSubforums.Put("/search", crud.UpdateModeratorsSubforums)
+	moderatorsSubforums.Delete("/search", crud.DeleteModeratorsSubforums)
+
 	post := api.Group("/post")
 	post.Get("/", crud.GetAllPosts)
 	post.Get("/:id", crud.GetSinglePost)
@@ -53,6 +60,13 @@ func SetupRoutes(app *fiber.App) {
 	tag.Post("/", crud.CreateTag)
 	tag.Put("/:id", crud.UpdateTag)
 	tag.Delete("/:id", crud.DeleteTag)
+
+	postsTags := api.Group("/poststags")
+	postsTags.Get("/", crud.GetAllPostsTags)
+	postsTags.Get("/search", crud.GetSinglePostsTags)
+	postsTags.Post("/", crud.CreatePostsTags)
+	postsTags.Put("/search", crud.UpdatePostsTags)
+	postsTags.Delete("/search", crud.DeletePostsTags)
 
 	vote := api.Group("/vote")
 	vote.Get("/", crud.GetAllVotes)

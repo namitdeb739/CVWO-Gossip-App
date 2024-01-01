@@ -45,11 +45,13 @@
   height: 80px;
   background-color: var(--linkwater);
   border-radius: 6px;
+  padding: 20px;
 }
 
 .inputIcon {
   height: 30px;
   width: 30px;
+  margin-right: 10px;
 }
 
 .invalid {
@@ -71,7 +73,7 @@
 }
 
 .toggle-btn {
-  margin: 0% 20px;
+  margin: 0% 15px;
 }
 
 .submit-container {

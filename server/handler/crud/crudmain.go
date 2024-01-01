@@ -54,30 +54,17 @@ func GetAllEntries(c* fiber.Ctx, tableType interface{}) error {
 											"data": nil})
 	}
 
-	return c.Status(200).JSON(fiber.Map{"status": "success",
-										"message": entryTypeName + " found",
-										"data": entries})
-}
-
-func GetSomeEntries(c *fiber.Ctx, tableType interface{}, searchKeys map[string]string) error {
-	db := database.DB.Db
-
-	entrySliceType := reflect.SliceOf(reflect.TypeOf(tableType))
-	entryTypeName := reflect.TypeOf(tableType).Name() + "s"
-	entries := reflect.New(entrySliceType).Interface()
-
-	search := db
-	for searchKey := range searchKeys {
-		searchKeys[searchKey] = c.Params(searchKey)
-		search = search.Where(searchKey + " = ?", searchKeys[searchKey])
-	}
-	search = search.Find(entries)
-
-	if search.Error != nil {
-		return c.Status(404).JSON(fiber.Map{"status": "error",
-											"message": entryTypeName + "s "  +  " not found",
-											"data": nil})
-	}
+	for i := 0; i < entrySliceVal.Len(); i++ {
+        entry := entrySliceVal.Index(i).Addr().Interface()
+        val := reflect.ValueOf(entry).Elem()
+        for j := 0; j < val.NumField(); j++ {
+            field := val.Field(j)
+            if field.Kind() == reflect.Slice && field.Type().Elem().Kind() == reflect.Struct {
+                associationName := val.Type().Field(j).Name
+                db.Preload(associationName).Find(entry)
+            }
+        }
+    }
 
 	return c.Status(200).JSON(fiber.Map{"status": "success",
 										"message": entryTypeName + " found",
@@ -113,7 +100,6 @@ func GetSingleEntry(c *fiber.Ctx, tableType interface{}, primaryKeyFieldName str
 										"message": entryTypeName + " found",
 										"data": entry})
 }
-
 
 func UpdateEntry(c *fiber.Ctx, tableType interface{}, primaryKeyFieldName string) error {
 	db := database.DB.Db
@@ -174,4 +160,139 @@ func DeleteEntry(c *fiber.Ctx, tableType interface{}, primaryKeyFieldName string
 
 	return c.Status(200).JSON(fiber.Map{"status": "error",
 										"message": entryTypeName + " " + entryPrimaryKeyVal + " deleted"})
+}
+
+
+// Generic functions to CRUD entries into join tables for Many to Many relationships
+func CreateManyToManyEntry(c *fiber.Ctx, tableType interface{}) error {
+	db := database.DB.Db
+	entryType := reflect.TypeOf(tableType)
+	entryTypeName := entryType.Name()
+	entry := reflect.New(entryType).Interface()
+
+	err := c.BodyParser(entry)
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"status": "error",
+											"message": "Invalid input: " + err.Error(),
+											"data": entry})
+	}
+
+	err = db.Create(entry).Error
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"status": "error",
+											"message": "Could not create " + entryTypeName + "relationship: " + err.Error(),
+											"data": entry})
+	}
+
+	return c.Status(201).JSON(fiber.Map{"status": "success",
+										"message": entryTypeName + " relationship added",
+										"data": entry})
+}
+
+func GetAllManyToManyEntries(c *fiber.Ctx, tableType interface{}) error {
+	db := database.DB.Db
+	entrySliceType := reflect.SliceOf(reflect.TypeOf(tableType))
+	entryTypeName := reflect.TypeOf(tableType).Name() + "s"
+	entries := reflect.New(entrySliceType).Interface()
+
+	db.Find(entries)
+
+	entrySliceVal := reflect.ValueOf(entries).Elem()
+
+	if entrySliceVal.Len() == 0 {
+		return c.Status(404).JSON(fiber.Map{"status": "error",
+											"message": entryTypeName + " relationship not found",
+											"data": nil})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"status": "success",
+										"message": entryTypeName + " relationship found",
+										"data": entries})
+}
+
+func GetSingleManyToManyEntry(c *fiber.Ctx, tableType interface{}, field1, field2 string) error {
+	db := database.DB.Db
+
+	field1Value := c.Params(field1)
+	field2Value := c.Params(field2)
+
+	entryType := reflect.TypeOf(tableType)
+	entryTypeName := entryType.Name()
+	entry := reflect.New(entryType).Interface()
+
+	search := db.Where(field1+" = ? AND "+field2+" = ?", field1Value, field2Value).First(entry)
+	if search.Error != nil {
+		return c.Status(404).JSON(fiber.Map{"status": "error",
+											"message": entryTypeName + " relationship not found",
+											"data": nil})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"status": "success",
+										"message": entryTypeName + " relationship found",
+										"data": entry})
+}
+
+func UpdateManyToManyEntry(c *fiber.Ctx, tableType interface{}, field1, field2 string) error {
+	db := database.DB.Db
+
+	field1Value := c.Params(field1)
+	field2Value := c.Params(field2)
+
+	entryType := reflect.TypeOf(tableType)
+	entryTypeName := entryType.Name()
+	entry := reflect.New(entryType).Interface()
+
+	search := db.Where(field1+" = ? AND "+field2+" = ?", field1Value, field2Value).First(entry)
+	if search.Error != nil {
+		return c.Status(404).JSON(fiber.Map{"status": "error",
+											"message": entryTypeName + " relationship not found",
+											"data": nil})
+	}
+
+	var updateEntry map[string]interface{}
+	err := c.BodyParser(&updateEntry)
+	if err != nil {
+		return c.Status(404).JSON(fiber.Map{"status": "error",
+											"message": "Invalid input: " + err.Error(),
+											"data": updateEntry})
+	}
+
+	err = db.Model(entry).Updates(updateEntry).Error
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"status": "error",
+											"message": "Could not update " + entryTypeName + " relationship: " + err.Error(),
+											"data": "err"})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"status": "success",
+										"message": entryTypeName + " relationship updated",
+										"data": entry})
+}
+
+func DeleteManyToManyEntry(c *fiber.Ctx, tableType interface{}, field1, field2 string) error {
+	db := database.DB.Db
+
+	field1Value := c.Params(field1)
+	field2Value := c.Params(field2)
+
+	entryType := reflect.TypeOf(tableType)
+	entryTypeName := entryType.Name()
+	entry := reflect.New(entryType).Interface()
+
+	search := db.Where(field1+" = ? AND "+field2+" = ?", field1Value, field2Value).First(entry)
+	if search.Error != nil {
+		return c.Status(404).JSON(fiber.Map{"status": "error",
+											"message": entryTypeName + " relationship not found",
+											"data": nil})
+	}
+
+	err := db.Delete(entry).Error
+	if err != nil {
+		return c.Status(404).JSON(fiber.Map{"status": "error",
+											"message": "Failed to delete " + entryTypeName + " relationship: " + err.Error(),
+											"data": nil})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"status": "success",
+										"message": entryTypeName + " deleted"})
 }

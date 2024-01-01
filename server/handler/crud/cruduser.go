@@ -29,9 +29,9 @@ func GetAllUsers(c *fiber.Ctx) error {
 	return GetAllEntries(c, model.User{})
 }
 
-func GetSomeUsers(c *fiber.Ctx, searchKeys map[string]string) error {
+/* func GetSomeUsers(c *fiber.Ctx, searchKeys map[string]string) error {
 	return GetSomeEntries(c, model.User{}, searchKeys)
-}
+} */
 
 func GetSingleUser(c *fiber.Ctx) error {
 	return GetSingleEntry(c, model.User{}, "ID")

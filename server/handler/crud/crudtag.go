@@ -13,9 +13,9 @@ func GetAllTags(c *fiber.Ctx) error {
 	return GetAllEntries(c, model.Tag{})
 }
 
-func getSomeTags(c *fiber.Ctx, searchKeys map[string]string) error {
+/* func getSomeTags(c *fiber.Ctx, searchKeys map[string]string) error {
 	return GetSomeEntries(c, model.Tag{}, searchKeys)
-}
+} */
 
 func GetSingleTag(c *fiber.Ctx) error {
 	return GetSingleEntry(c, model.Tag{}, "ID")

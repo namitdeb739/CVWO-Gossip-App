@@ -14,9 +14,9 @@ func GetAllSubforums(c *fiber.Ctx) error {
 	return GetAllEntries(c, model.Subforum{})
 }
 
-func getSomeSubforums(c *fiber.Ctx, searchKeys map[string]string) error {
+/* func getSomeSubforums(c *fiber.Ctx, searchKeys map[string]string) error {
 	return GetSomeEntries(c, model.Subforum{}, searchKeys)
-}
+} */
 
 func GetSingleSubforum(c *fiber.Ctx) error {
 	return GetSingleEntry(c, model.Subforum{}, "ID")
