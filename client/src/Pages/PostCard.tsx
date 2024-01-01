@@ -12,6 +12,7 @@ import { useState } from "react";
 import Chip from "@mui/material/Chip";
 import getDataFromID from "../helpers/getDataFromID";
 import { Box } from "@mui/material";
+import { ENDPOINT } from "../App";
 
 function PostCard(props: { post: Post }) {
   const [userID] = useState(props.post.UserID);
@@ -37,7 +38,9 @@ function PostCard(props: { post: Post }) {
           title={
             <b>
               Posted to <u>{subforum ? subforum.Name : ""}</u> by{" "}
-              <u>{user ? user.Username : ""}</u>
+              <a href={"/user/" + userID} className="link">
+                <u>{user ? user.Username : ""}</u>
+              </a>
             </b>
           }
           subheader={<p>{formatDate(createdAt)}</p>}

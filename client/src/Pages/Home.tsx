@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { ENDPOINT } from "../App";
 
 function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -14,7 +15,7 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("http://localhost:8080/api/post", {
+      const response = await fetch(ENDPOINT + "/api/post", {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -29,7 +30,7 @@ function Home() {
           : [];
       setPosts(sortedPosts);
     })();
-  }, []); // Add an empty dependency array to useEffect
+  }, []); 
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;

@@ -50,7 +50,7 @@ function Profile(props: { user: User }) {
   }, [props.user]);
 
   const formatDate = (date: Date) => {
-    return date.toISOString().slice(0, 19).replace("T", " ");
+    return date.toString().slice(0, 19).replace("T", " ");
   };
 
   return (
@@ -122,6 +122,7 @@ function Profile(props: { user: User }) {
                   gridTemplateRows: "repeat(10, 1fr)",
                 }}
               >
+                {" "}
                 {moderatedSubforums && moderatedSubforums.length > 0 ? (
                   moderatedSubforums.map((subforum, index) => (
                     <Item key={index} className="custom-hover-effect">
@@ -137,9 +138,7 @@ function Profile(props: { user: User }) {
                         </Item>
                         <Item className="hoverBox">
                           <div className="data">
-                            {subforum.Description === undefined
-                              ? ""
-                              : subforum.Description.length > 15
+                            {subforum.Description.length > 15
                               ? subforum.Description.slice(0, 15) + "..."
                               : subforum.Description}
                           </div>

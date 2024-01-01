@@ -4,6 +4,7 @@ import KeyIcon from "@mui/icons-material/Key";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ENDPOINT } from "../App";
 
 function LoginRegister(props: {
   setUsername?: (name: string) => void;
@@ -24,7 +25,7 @@ function LoginRegister(props: {
     e.preventDefault();
 
     const response = await fetch(
-      "http://localhost:8080/api/" + props.type,
+      ENDPOINT+"/api/"+props.type,
       props.type === "Register"
         ? {
             method: "POST",

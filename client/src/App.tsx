@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
 import { useEffect, useState } from "react";
 import Profile from "./pages/Profile";
+import UserPage from "./pages/UserPage";
 export const ENDPOINT = "http://localhost:8080";
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("http://localhost:8080/api/authuser", {
+      const response = await fetch(ENDPOINT + "/api/authuser", {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
@@ -50,25 +51,17 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <Nav
-          username={user.Username}
-          setUsername={setUsername}
-        />
+        <Nav username={user.Username} setUsername={setUsername} />
         <main>
           <BrowserRouter>
             <Routes>
-              <Route
-                path="/"
-                element={<Home />}
-              />
+              <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile user={user} />} />
+              <Route path="/user/:ID" element={<UserPage />} />
               <Route
                 path="/login"
                 element={
-                  <LoginRegister
-                    type="Login"
-                    setUsername={setUsername}
-                  />
+                  <LoginRegister type="Login" setUsername={setUsername} />
                 }
                 key="login"
               />
