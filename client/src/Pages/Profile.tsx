@@ -22,7 +22,6 @@ function Profile(props: { user: User }) {
   const [moderatedSubforums, setModeratedSubforums] = useState(
     props.user.ModeratedSubforums
   );
-  const [posts, setPosts] = useState(props.user.Posts);
   const [votes, setVotes] = useState(props.user.Votes);
   const [createdAt, setCreatedAt] = useState(props.user.CreatedAt);
   const [hidePassword, setHidePassword] = useState(true);
@@ -34,7 +33,6 @@ function Profile(props: { user: User }) {
       setUsername(props.user.Username);
       setPassword(props.user.Password);
       setModeratedSubforums(props.user.ModeratedSubforums);
-      setPosts(props.user.Posts);
       setVotes(props.user.Votes);
       setCreatedAt(props.user.CreatedAt);
 
@@ -44,7 +42,7 @@ function Profile(props: { user: User }) {
               (a, b) =>
                 new Date(b.CreatedAt.toString()).valueOf() -
                 new Date(a.CreatedAt.toString()).valueOf()
-            )
+            ).reverse()
           : [];
 
       setRecentPosts(sortedPosts.slice(0, 10));

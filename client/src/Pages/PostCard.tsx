@@ -14,13 +14,13 @@ import getDataFromID from "../helpers/getDataFromID";
 import { Box } from "@mui/material";
 
 function PostCard(props: { post: Post }) {
-  const [userID, setUserID] = useState(props.post.UserID);
-  const [subforumID, setSubforumID] = useState(props.post.SubforumID);
-  const [title, setTitle] = useState(props.post.Title);
-  const [body, setBody] = useState(props.post.Body);
-  const [votes, setVotes] = useState(props.post.Votes);
-  const [tags, setTags] = useState(props.post.Tags);
-  const [createdAt, setCreatedAt] = useState(props.post.CreatedAt);
+  const [userID] = useState(props.post.UserID);
+  const [subforumID] = useState(props.post.SubforumID);
+  const [title] = useState(props.post.Title);
+  const [body] = useState(props.post.Body);
+  const [votes] = useState(props.post.Votes);
+  const [tags] = useState(props.post.Tags);
+  const [createdAt] = useState(props.post.CreatedAt);
 
   const user = getDataFromID<User>(userID, "user");
   const subforum = getDataFromID<Subforum>(subforumID, "subforum");
