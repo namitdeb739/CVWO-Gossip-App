@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Profile from "./Profile";
 import { ENDPOINT } from "../App";
 
-function User() {
+function UserPage() {
   const { ID } = useParams();
   const [user, setUser] = useState<User>({
     Username: "",
@@ -33,4 +33,4 @@ function User() {
   return <Profile user={user} />;
 }
 
-export default User;
+export default UserPage;

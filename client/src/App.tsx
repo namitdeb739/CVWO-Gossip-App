@@ -8,6 +8,7 @@ import { ThemeProvider } from "@emotion/react";
 import { useEffect, useState } from "react";
 import Profile from "./pages/Profile";
 import UserPage from "./pages/UserPage";
+import SubforumPage from "./pages/SubforumPage";
 export const ENDPOINT = "http://localhost:8080";
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile user={user} />} />
               <Route path="/user/:ID" element={<UserPage />} />
+              <Route path="/subforum/:ID" element={<SubforumPage />} />
               <Route
                 path="/login"
                 element={

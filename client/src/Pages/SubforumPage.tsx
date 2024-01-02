@@ -1,41 +1,37 @@
-import { useEffect, useState } from "react";
-import "./Home.css";
-import PostCard from "../components/PostCard";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Pagination from "@mui/material/Pagination";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { Box, Stack, Button, Typography, Pagination } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { ENDPOINT } from "../App";
-import SubforumPage from "./SubforumPage";
+import PostCard from "../components/PostCard";
+import { useLocation, useParams } from "react-router-dom";
 
-function Home() {
-  const [posts, setPosts] = useState<Post[]>([]);
+function SubforumPage() {
+  const { ID } = useLocation().pathname==="/" ? {ID: ""} : useParams();
+  const [subforum, setSubforum] = useState<Subforum>({
+    Name: "",
+    Description: "",
+    Moderators: [],
+    Posts: [],
+    CreatedAt: new Date(),
+  });
+
   const [currentPage, setCurrentPage] = useState<number>(1);
   const postsPerPage = 5;
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(ENDPOINT + "/api/post", {
+      const response = await fetch(ENDPOINT + "/api/subforum/" + ID, {
         headers: { "Content-Type": "application/json" },
       });
 
       const content = await response.json();
 
-      const sortedPosts =
-        content.data?.length > 0
-          ? [...content.data].sort(
-              (a: { CreatedAt: Date }, b: { CreatedAt: Date }) =>
-                b.CreatedAt.valueOf() - a.CreatedAt.valueOf()
-            )
-          : [];
-      setPosts(sortedPosts);
+      setSubforum(content.data);
     })();
-  }, []);
+  }, [ID]);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = subforum.Posts.slice(indexOfFirstPost, indexOfLastPost);
 
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
@@ -47,10 +43,10 @@ function Home() {
   return (
     <div className="container">
       <div className="header">
-        <div className="text">NUS Forum</div>
+        <div className="text">NUS Forum / {subforum.Name}</div>
         <div className="underline"></div>
       </div>
-      <Box sx={{ width: "100%", marginTop: "30px" }}>
+      <Box sx={{ width: "100%", marginTop: "20px"}}>
         <Stack spacing={1}>
           <div
             style={{
@@ -84,14 +80,14 @@ function Home() {
               </Typography>
             </Button>
           </div>
-          {currentPosts.map((post, index) => (
+          {subforum.Posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}
         </Stack>
       </Box>
 
       <Pagination
-        count={Math.ceil(posts.length / postsPerPage)}
+        count={Math.ceil(subforum.Posts.length / postsPerPage)}
         page={currentPage}
         color="secondary"
         onChange={handlePageChange}
@@ -100,4 +96,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default SubforumPage;

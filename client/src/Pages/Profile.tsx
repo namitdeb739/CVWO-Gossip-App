@@ -50,7 +50,7 @@ function Profile(props: { user: User }) {
   }, [props.user]);
 
   const formatDate = (date: Date) => {
-    return date.toString().slice(0, 19).replace("T", " ");
+    return date.toString().slice(0, 15);
   };
 
   return (
@@ -186,7 +186,7 @@ function Profile(props: { user: User }) {
                         <Item className="hoverBox">
                           <div className="dataDate">
                             {post.CreatedAt
-                              ? post.CreatedAt.toString().split("T")[0]
+                              ? formatDate(new Date(post.CreatedAt))
                               : ""}
                           </div>
                         </Item>
