@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import formatDate from "../helpers/formatDate";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -49,9 +50,6 @@ function Profile(props: { user: User }) {
     })();
   }, [props.user]);
 
-  const formatDate = (date: Date) => {
-    return date.toString().slice(0, 15);
-  };
 
   return (
     <div className="container">
