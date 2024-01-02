@@ -14,16 +14,17 @@ import getDataFromID from "../helpers/getDataFromID";
 import { Box } from "@mui/material";
 
 function PostCard(props: { post: Post }) {
+  const [ID] = useState(props.post.ID)
   const [userID] = useState(props.post.UserID);
   const [subforumID] = useState(props.post.SubforumID);
   const [title] = useState(props.post.Title);
   const [body] = useState(props.post.Body);
   const [votes] = useState(props.post.Votes);
-  const [tags] = useState(props.post.Tags);
   const [createdAt] = useState(props.post.CreatedAt);
 
   const user = getDataFromID<User>(userID, "user");
   const subforum = getDataFromID<Subforum>(subforumID, "subforum");
+  const tags = getDataFromID<Post>(ID, "post")?.Tags
 
   const formatDate = (date: Date) => {
     return date.toString().slice(0, 19).replace("T", " ");

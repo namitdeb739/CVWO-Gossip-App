@@ -12,6 +12,7 @@ import SubforumPage from "./pages/SubforumPage";
 export const ENDPOINT = "http://localhost:8080";
 
 function App() {
+  const [id, setID] = useState(0);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [moderatedSubforums, setModeratedSubforums] = useState<Subforum[]>([]);
@@ -21,6 +22,7 @@ function App() {
   const [createdAt, setCreatedAt] = useState(new Date);
 
   const user: User = {
+    ID: id,
     Username: username,
     Password: password,
     ModeratedSubforums: moderatedSubforums,
@@ -39,6 +41,7 @@ function App() {
 
       const content = await response.json();
 
+      setID(content.data.ID);
       setUsername(content.data.Username);
       setPassword(content.data.Password);
       setModeratedSubforums(content.data.Moderated_Subforums);

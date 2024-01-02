@@ -1,4 +1,5 @@
 interface Subforum {
+  ID: number;
   Name: string;
   Description: string;
   Moderators: User[];

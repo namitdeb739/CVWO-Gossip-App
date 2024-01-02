@@ -1,4 +1,5 @@
 interface Post {
+  ID: number;
   UserID: number;
   SubforumID: number;
   Title: string;

@@ -7,7 +7,6 @@ import Pagination from "@mui/material/Pagination";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { ENDPOINT } from "../App";
-import SubforumPage from "./SubforumPage";
 
 function Home() {
   const [posts, setPosts] = useState<Post[]>([]);

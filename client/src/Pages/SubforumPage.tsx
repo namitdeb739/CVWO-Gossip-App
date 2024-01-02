@@ -5,8 +5,9 @@ import PostCard from "../components/PostCard";
 import { useLocation, useParams } from "react-router-dom";
 
 function SubforumPage() {
-  const { ID } = useLocation().pathname==="/" ? {ID: ""} : useParams();
+  const { ID } = useLocation().pathname === "/" ? { ID: "" } : useParams();
   const [subforum, setSubforum] = useState<Subforum>({
+    ID: 0,
     Name: "",
     Description: "",
     Moderators: [],
@@ -46,7 +47,7 @@ function SubforumPage() {
         <div className="text">NUS Forum / {subforum.Name}</div>
         <div className="underline"></div>
       </div>
-      <Box sx={{ width: "100%", marginTop: "20px"}}>
+      <Box sx={{ width: "100%", marginTop: "20px" }}>
         <Stack spacing={1}>
           <div
             style={{
@@ -80,7 +81,7 @@ function SubforumPage() {
               </Typography>
             </Button>
           </div>
-          {subforum.Posts.map((post, index) => (
+          {currentPosts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}
         </Stack>
